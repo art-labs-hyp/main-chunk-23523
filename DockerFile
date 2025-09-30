@@ -1,0 +1,19 @@
+# Apache + PHP imajı
+FROM php:8.2-apache
+
+# Uygulama klasörü
+WORKDIR /var/www/html
+
+# Senin PHP dosyanı ana sayfa olarak kopyala
+# (Dosyanın adı farklıysa aşağıyı ona göre düzelt)
+COPY main-chunk-23523.php /var/www/html/index.php
+
+# Runtime'da Render'ın verdiği $PORT'a göre Apache portunu ayarlayan start script'i kopyala
+COPY docker-start.sh /usr/local/bin/docker-start.sh
+RUN chmod +x /usr/local/bin/docker-start.sh
+
+# Varsayılan 10000; Render $PORT verecek
+EXPOSE 10000
+
+# Apache'yi doğru portla başlat
+CMD ["docker-start.sh"]
